@@ -1,4 +1,5 @@
 var express = require('express');
+var restify = require('restify-clients')
 var router = express.Router();
 
 /* GET users listing. */
