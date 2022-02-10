@@ -2,9 +2,6 @@
 	path = projeto_user-teste-done-
 	url = https://github.com/ReinaldoARamos/projeto_user-teste-done-.git
 
-[submodule "user-rest-api"]
-path = user-rest-api
-url = https://github.com/ReinaldoARamos/curso-javascript-projeto-usuarios-restapi
 [submodule "curso-javascript-projeto-usuarios-restapi"]
 	path = curso-javascript-projeto-usuarios-restapi
-	url = https://github.com/hcodebr/curso-javascript-projeto-usuarios-restapi.git
+	url = https://github.com/hcodebr/curso-javascript-projeto-usuarios-restapi
