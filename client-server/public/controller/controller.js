@@ -13,8 +13,9 @@ class UserController {
   OnEdit() {
     document
       .querySelector("#box-user-update .btn-cancel")
-      .addEventListener("click", (e) => { //Adiciona o event listener de click
-        this.showPanelCreate(); 
+      .addEventListener("click", (e) => {
+        //Adiciona o event listener de click
+        this.showPanelCreate();
       });
     this.formUpdateEl.addEventListener("submit", (event) => {
       //Pega o formupdate e coloca event listenet submit
@@ -22,7 +23,6 @@ class UserController {
       event.preventDefault(); //previne o refresh no envio de formulário
 
       let btn = this.formUpdateEl.querySelector("[type=submit]"); //Cria o botao do submit
-      
 
       btn.disabled = true; //Deixa o botão desabilitado
       let values = this.GetValues(this.formUpdateEl); //recebe o método get values e passa o o formulário como parametro valores por parâmetro
@@ -32,21 +32,22 @@ class UserController {
       let result = Object.assign({}, userOld, values); //os valores a direita substituem os da esquerad
       //values substitui os valoers que não existem ou que existem em userOld e userOld substitui o vazio
 
-      this.GetPhoto(this.formUpdateEl).then(//executa o metodo getphoto
-        (content) => {//recebe os parametros do método
-          if (!values.photo) { //Se a nova imagem nao tiver valor ele mantém o antigo através dp consig
+      this.GetPhoto(this.formUpdateEl).then(
+        //executa o metodo getphoto
+        (content) => {
+          //recebe os parametros do método
+          if (!values.photo) {
+            //Se a nova imagem nao tiver valor ele mantém o antigo através dp consig
             result._photo = userOld._photo; //Mantémm a foto como a antiga
-
           } else {
             result._photo = content; //Caso haja ele faz um consing dos objetos e coloca a nova
           }
-         let user = new User(); //Cria um novo objeto
-         user.loadFromJSON(result); //executa o método LoadFromJSON e pega o result(objeto) como parametro
-         user.save(); //método save
+          let user = new User(); //Cria um novo objeto
+          user.loadFromJSON(result); //executa o método LoadFromJSON e pega o result(objeto) como parametro
+          user.save(); //método save
 
-        this.getTr(user, tr); //o tr é passado pois já está criado 
-        
-        
+          this.getTr(user, tr); //o tr é passado pois já está criado
+
           this.updateCount(); //método para aumentar o contador
 
           this.formUpdateEl.reset(); //reseta o formulário para esvaziar os campos
@@ -61,29 +62,29 @@ class UserController {
   }
 
   // -- >> OnSubmit executa o código quando algum botão for pressionado(EVent Listener de click*//
-  OnSubmit() { //
-   //Método para dar submit nos valores
-  
-   this.formEl.addEventListener(  //adicionba o submit como evento
+  OnSubmit() {
+    //
+    //Método para dar submit nos valores
+
+    this.formEl.addEventListener(
+      //adicionba o submit como evento
       "submit",
       /* function  removemos a function pois ela limita o escopo
           entao ela só recebe o evento(que no caso é o submit, e deixa ele pegar o método Get Values
               //Nao precisamos chamar o evento no Html Pois há um Event listener Submit, ou seja, quando o JS
               //"ouvir" o submit ele automitcamente chama este método, não é possível chamar direto pois ele está
               //fora do escopo global, se limitando apenas no escopo do contructor User Controller.
-              fora do escopo*/ (
-        event
-      ) => {
+              fora do escopo*/ (event) => {
         event.preventDefault(); //previne o refresh no envio de formulário
 
-        let btn = this.formEl.querySelector("[type=submit]"); //btn 
+        let btn = this.formEl.querySelector("[type=submit]"); //btn
 
         btn.disabled = true; //bnt desabilitado
 
-        let values = this.GetValues(this.formEl); //Recebe o valor dos campos do formulário 
+        let values = this.GetValues(this.formEl); //Recebe o valor dos campos do formulário
         if (!values) return false; //Se não tiver valores ele retorna false e cancela o resto da função
 
-        this.GetPhoto(this.formEl).then(  
+        this.GetPhoto(this.formEl).then(
           (content) => {
             values.photo = content; //recebe o valor da foto como parametro e iguala ao parametro content
 
@@ -101,7 +102,7 @@ class UserController {
     );
   }
 
-  /*------------DOCUMENTAR MELHOR DEPOIS---------------------------------*/ 
+  /*------------DOCUMENTAR MELHOR DEPOIS---------------------------------*/
   GetPhoto(formEl) {
     //prommisse para executar função assincrona
     //preparamos o código para 2 situações, o se funcionar ou se falhar
@@ -131,18 +132,21 @@ class UserController {
       }
     });
   }
-/*--------------------------------------------------------------------------*/
+  /*--------------------------------------------------------------------------*/
   GetValues( //recebe o valor dos formularios
     formEl /*Nesse caso é uma variável passada como parâmetro, e não o let que pega o id*/
   ) {
     let user = {}; //o Let cria uma var no escopo do método
-    let isValid = true; 
+    let isValid = true;
 
     /*Colocamos o this.formEl entre arrays para transformar em arrays, para assim o for each funcionar */
-    [...formEl.elements].forEach(function (field, index) { //Ele entra na array com o forms e passa por todos os elementos
+    [...formEl.elements].forEach(function (field, index) {
+      //Ele entra na array com o forms e passa por todos os elementos
       //remoção do this para que o FOrmEl seja apenas uma variável
-      if ( //Esse if verifica se h´a valores dentro do forms
-        ["name", "password", "email"].indexOf( //recupera a posição dos itens
+      if (
+        //Esse if verifica se h´a valores dentro do forms
+        ["name", "password", "email"].indexOf(
+          //recupera a posição dos itens
           field.name /*Nome do campo que passar pelo ForEAch*/
         ) > -1 &&
         !field.value /*field que conrtem os valores*/
@@ -160,8 +164,8 @@ class UserController {
       //esse if gender é para caso o campo gender esteja marcado como checked ele puxe os valores dos campos
       // o For Each passa por todos os campos do HTML(pos causa do Elements do FormsEl, que retorna os campos)
       //indexados
-     
-     /* Verifica se os valores estão com check*/
+
+      /* Verifica se os valores estão com check*/
       if (field.name == "gender") {
         if (field.checked) {
           user[field.name] = field.value;
@@ -191,22 +195,34 @@ class UserController {
     //essa função foi criada para passar por todos os fields e pegar os valores
   }
 
- 
   selectAll() {
-    let users = User.getUserStorage();
-    users.forEach((dataUser) => {
-      let user = new User();
-      user.loadFromJSON(dataUser);
-      this.AddLine(user);
-      //O SelectALl pega a coleção do user storage e instancia, em seguida, essa instancia
-      //recebe os valores do loadfromJSon(que se iguala a cada atributo do objeto json)
-      // e em seguida manda pro addLine, que por sua vez irá mandar os valores recebidos
-      //pelo parâmetro até a template string
-    });
+    // let users = User.getUserStorage();
+
+    let ajax = XMLHttpRequest; //criando a solicitação https XML
+
+    ajax.open("GET", "/users"); //Aqui eu tenho que definir o método que o ajax vai usar e onde usar
+    ajax.onload = (event) => { // aqui criamos um evento que executa quando o request é carregado
+      let obj = JSON.parse(ajax.respondeText); 
+      //Esse evento aqui cria um let obj que contém a informação que o servidor retornou
+      //como é um JSON é feito um parse
+      //Como faremos um parse do JSON, ele vai pegar a informação e tranformar em um nod
+      //Com array de usuários 
+
+      obj.users.forEach((dataUser) => { //colocamos o users poir ele virou um array por conta do parse
+        //aray esse que é feito o for each para adicionar os usuários na tela
+        let user = new User();
+        user.loadFromJSON(dataUser);
+        this.AddLine(user);
+        //O SelectALl pega a coleção do user storage e instancia, em seguida, essa instancia
+        //recebe os valores do loadfromJSon(que se iguala a cada atributo do objeto json)
+        // e em seguida manda pro addLine, que por sua vez irá mandar os valores recebidos
+        //pelo parâmetro até a template string
+      });
+    };
   }
 
- 
-  AddLine(dataUser) { //data user parametro
+  AddLine(dataUser) {
+    //data user parametro
     let tr = this.getTr(dataUser); //o valor do let é o que aconteceu dentro do método ficou registrado nela
 
     this.TableEl.appendChild(tr); //pega a tr do data user e da um apoend child no tr que cria tabelas novas
@@ -214,16 +230,17 @@ class UserController {
     this.updateCount(); //aumenta os admin
   }
 
-  getTr(dataUser, tr = null) {  //pega o valor dos users e a tr vazia
+  getTr(dataUser, tr = null) {
+    //pega o valor dos users e a tr vazia
     if (tr === null) tr = document.createElement("tr"); //passamos tr como parâmetro opcional, para que caso /create element de tr
     //o user clique em editar e ele perceba que já há uma tr registrada, ele não crie
     //isso pq no editar não criamos uma tr, nos pegamos uma existente
-    tr.dataset.user /*nome usado pra guardar, tipo uma var*/ = JSON.stringify(
-      dataUser
-    ); //valores recebidos
+    tr.dataset.user /*nome usado pra guardar, tipo uma var*/ =
+      JSON.stringify(dataUser); //valores recebidos
     //o JSON seirializa o obj(tranforma em string)
 
-    tr.innerHTML = //ineri uma template string dentro do HTML
+    tr.innerHTML =
+      //ineri uma template string dentro do HTML
       //Colocamos o TableId para ele receber o Id da tabela toda
       //inserir comanbdos no HTML
       `  
@@ -243,18 +260,20 @@ class UserController {
     return tr;
   }
   addEventsTR(tr) {
-    tr.querySelector(".btn-delete").addEventListener("click", (e) => { //adiciona os eventos de click na tr
-      if (confirm("Deseja realmente deletar este usuário")) { //Um confirm nativo do js
-       let user = new User(); //Pega o user
-       user.loadFromJSON(JSON.parse(tr.dataset.user)) //faz um dataser nesse novo user
-       //lembrando que JSOn é string e parse o serializa em obj real
-       user.deleteUser(); //Deleta ele da tr
-       tr.remove(); //Remove a tr
+    tr.querySelector(".btn-delete").addEventListener("click", (e) => {
+      //adiciona os eventos de click na tr
+      if (confirm("Deseja realmente deletar este usuário")) {
+        //Um confirm nativo do js
+        let user = new User(); //Pega o user
+        user.loadFromJSON(JSON.parse(tr.dataset.user)); //faz um dataser nesse novo user
+        //lembrando que JSOn é string e parse o serializa em obj real
+        user.deleteUser(); //Deleta ele da tr
+        tr.remove(); //Remove a tr
         this.updateCount(); //Reduz um numero
       }
     });
 
-    tr.querySelector(".btn-edit").addEventListener("click", (e) => { 
+    tr.querySelector(".btn-edit").addEventListener("click", (e) => {
       let json = JSON.parse(tr.dataset.user); //JSON são as propriedades de objetos porém não mais instanciados
 
       this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex; //seta o dado na tr do index, no caso, sua localização
