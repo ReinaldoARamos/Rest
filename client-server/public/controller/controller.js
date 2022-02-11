@@ -198,7 +198,7 @@ class UserController {
   selectAll() {
     // let users = User.getUserStorage();
 
-    let ajax = XMLHttpRequest; //criando a solicitação https XML
+    let ajax = new XMLHttpRequest; //criando a solicitação https XML
 
     ajax.open("GET", "/users"); //Aqui eu tenho que definir o método que o ajax vai usar e onde usar
     ajax.onload = (event) => {
@@ -228,6 +228,8 @@ class UserController {
         //pelo parâmetro até a template string
       });
     };
+
+    ajax.send();
   }
 
   AddLine(dataUser) {
