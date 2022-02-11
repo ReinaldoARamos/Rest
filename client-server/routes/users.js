@@ -9,7 +9,10 @@ URL: 'https://localhost:4000'
 })
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  client.get('/users', function(err, req, res, obj) {
+    assert.iferror(err);
+    console.log(JSON.stringify(obj, null, 2))
+  });
 });
 
 module.exports = router;
