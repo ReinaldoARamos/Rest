@@ -3,7 +3,8 @@ class HttpRequest {
     static request(method/*get set etc*/, url/* a rota* */, params = {}) { 
         //colocamos um método estático porque desse jeito podemos chamar o método 
         //fora da classe de forma direta, sme precisar criar uma intância da classe
-        let ajax = new XMLHttpRequest; 
+        return new Promise((resolve, reject)=>{
+            let ajax = new XMLHttpRequest; 
         //criando a solicitação https XML
 
         ajax.open(method.toUpperCase(), url); 
@@ -21,13 +22,17 @@ class HttpRequest {
             //Como faremos um parse do JSON, ele vai pegar a informação e tranformar em um nod
             //Com array de usuários
           } catch (e) {
+              reject(e)
             console.log(e); //console do erro
           }
     
-          
+          resolve(obj);
         };
     
         ajax.send();
 
+        });
+            
+        
     }
 }
