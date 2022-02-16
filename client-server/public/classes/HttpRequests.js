@@ -11,7 +11,7 @@ class HttpRequest {
         ajax.onload = (event) => {
           // aqui criamos um evento que executa quando o request é carregado
     
-          let obj = { users: [] }; //criado um obj como array users vazio pra nao ter problema no foreach
+          let obj = { }; //criado um obj como array users vazio pra nao ter problema no foreach
     
           try {
             obj = JSON.parse(ajax.responseText); 
