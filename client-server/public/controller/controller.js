@@ -195,6 +195,7 @@ class UserController {
     //essa função foi criada para passar por todos os fields e pegar os valores
   }
 
+  
   selectAll() {
     HttpRequest.get('/users').then(data=> { //criando a classe httprequest
       //nela usamos o then, ou seja, aqui a classe usa o método get, pega os valores do
@@ -205,6 +206,7 @@ class UserController {
         //aray esse que é feito o for each para adicionar os usuários na tela
         let user = new User();
         user.loadFromJSON(dataUser);
+        
         
         this.AddLine(user);
         //O SelectALl pega a coleção do user storage e instancia, em seguida, essa instancia
