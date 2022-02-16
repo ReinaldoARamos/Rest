@@ -205,6 +205,7 @@ class UserController {
         //aray esse que é feito o for each para adicionar os usuários na tela
         let user = new User();
         user.loadFromJSON(dataUser);
+        
         this.AddLine(user);
         //O SelectALl pega a coleção do user storage e instancia, em seguida, essa instancia
         //recebe os valores do loadfromJSon(que se iguala a cada atributo do objeto json)
