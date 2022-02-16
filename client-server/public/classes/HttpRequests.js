@@ -1,6 +1,7 @@
 class HttpRequest {
 
-    static request() {
+    static request() { //colocamos um método estático porque desse jeito podemos chamar o método 
+        //fora da classe de forma direta, sme precisar criar uma intância da classe
         let ajax = new XMLHttpRequest; //criando a solicitação https XML
 
         ajax.open("GET", "/users"); //Aqui eu tenho que definir o método que o ajax vai usar e onde usar
