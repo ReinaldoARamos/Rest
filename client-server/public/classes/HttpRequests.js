@@ -9,6 +9,9 @@ class HttpRequest {
 
         ajax.open(method.toUpperCase(), url); 
         //Aqui eu tenho que definir o método que o ajax vai usar e onde usar
+        ajax.onerror = (event)=>{
+            reject(event);
+        }
         ajax.onload = (event) => {
           // aqui criamos um evento que executa quando o request é carregado
     
