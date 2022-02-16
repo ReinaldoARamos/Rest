@@ -6,7 +6,7 @@ class HttpRequest {
         let ajax = new XMLHttpRequest; 
         //criando a solicitação https XML
 
-        ajax.open("GET", "/users"); 
+        ajax.open(method.toUpperCase(), url); 
         //Aqui eu tenho que definir o método que o ajax vai usar e onde usar
         ajax.onload = (event) => {
           // aqui criamos um evento que executa quando o request é carregado
