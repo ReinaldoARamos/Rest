@@ -14,6 +14,7 @@ class HttpRequest {
 }
 static delete(url, params= {}) {
   return HttpRequest.request('DELETE', url, params)
+  //Lembrando que tudo isso é chamado la no users.js
 
 }
     static request(method/*get set etc*/, url/* a rota* */, params = {}) { 

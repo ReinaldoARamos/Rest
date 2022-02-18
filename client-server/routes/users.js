@@ -33,6 +33,21 @@ router.get('/:id', function(req, res, next) {//ja temos uma rota pra / que ta de
     //toda vez que chamaram / vao chamar também a barra users
   });
 
+
+  
+});
+router.put('/:id', function(req, res, next) {//ja temos uma rota pra / que ta dentro do arquivo users.js
+  client.put(`/users/${req.params.id}`,req.body ,function(err, request, response, obj) { //criamos aqui a chamada do client na rota users
+    //que busca as informações dentro da mesma, noc aso os users do rest-api
+    assert.ifError(err);
+    res.json(obj) 
+    //passamos assim pra pra ao invés de usar o JSON Stringfy ele ja interptera
+    //o JSOn, no caso o obj
+    //------
+    //toda vez que chamaram / vao chamar também a barra users
+  });
+
+
   
 });
 
