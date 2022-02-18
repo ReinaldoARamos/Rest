@@ -4,6 +4,18 @@ class HttpRequest {
         return HttpRequest.request('GET', url, params)
 
     }
+    static put(url, params= {}) {
+      return HttpRequest.request('PUT', url, params)
+
+  }
+  static post(url, params= {}) {
+    return HttpRequest.request('POST', url, params)
+
+}
+static delete(url, params= {}) {
+  return HttpRequest.request('DELETE', url, params)
+
+}
     static request(method/*get set etc*/, url/* a rota* */, params = {}) { 
         //colocamos um método estático porque desse jeito podemos chamar o método 
         //fora da classe de forma direta, sme precisar criar uma intância da classe
