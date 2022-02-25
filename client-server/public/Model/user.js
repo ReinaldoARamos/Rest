@@ -93,25 +93,7 @@ class User {
     return userID;
   }
   save() {
-    let users = User.getUserStorage(); //retorna todos os usuários em um array e faz um parse
-
-    if (this.id > 0) {
-      //verifica se há um id
-      users = users.map(u => {
-        if (u._id == this.id) {
-            u = this;
-        }
-
-        return u;
- });
-    } else {
-      this._id = this.getNewId();
-      users.push(this);
-    }
-
-    // sessionStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
-    localStorage.setItem("users", JSON.stringify(users)); //aqui é onde gera a chave e o valor,
-    // sendo o primeiro a chave e o segundo o valor
+    
   }
   deleteUser(){
 
