@@ -92,8 +92,30 @@ class User {
     localStorage.setItem("userID", userID)
     return userID;
   }
+
+  toJSON(){
+      
+       let json  = {}
+
+      Object.keys(this).forEach(key=>{
+         // aqui to usando o método do obejectt...onde ele busca uma key
+        //essa key é o this, ou seja, o this vai mandar um array, e esse array vai ter keys, onde podemos 
+        //executar um forEach que vai veriricar todas as keys dentro desse array
+
+      if(this[key] !== undefined)  json[key] = this[key];
+      //dentro desse array ele vai executar um if para verificar se a key é undefined, e caso nao seja
+      //ele pela o objeto vazio json criado noe escpopo do método e iguala À key do array
+    });
+           return json //enfim ele retorna
+  }
   save() {
-    
+    if (this.id) {
+      HttpRequest.put(`/users${this.id}`, this.toJSON());
+      //colocando o httprequest put para criar cadastrar um usuário novo, passando o parametro da rota e o id
+
+    } else {
+      
+    }
   }
   deleteUser(){
 
