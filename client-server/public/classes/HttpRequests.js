@@ -13,7 +13,7 @@ class HttpRequest {
 
 }
 static delete(url, params= {}) {
-  return HttpRequest.request('DELETE', url, params)
+  return HttpRequest.request('DELETE', url, params)//a gente chama o request para ele realizar o ajax e retornar uma promise
   //Lembrando que tudo isso é chamado la no users.js
 
 }

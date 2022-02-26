@@ -114,7 +114,8 @@ class User {
       //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
 
     } else {
-      
+      HttpRequest.post(`/users${this.id}`, this.toJSON());
+      //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
     }
   }
   deleteUser(){
