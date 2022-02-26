@@ -111,7 +111,7 @@ class User {
   save() {
     if (this.id) {
       HttpRequest.put(`/users${this.id}`, this.toJSON());
-      //colocando o httprequest put para criar cadastrar um usuário novo, passando o parametro da rota e o id
+      //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
 
     } else {
       
