@@ -44,15 +44,15 @@ class UserController {
           }
           let user = new User(); //Cria um novo objeto
           user.loadFromJSON(result); //executa o método LoadFromJSON e pega o result(objeto) como parametro
-          user.save(); //método save
+          user.save().then((user) => {
+            this.getTr(user, tr); //o tr é passado pois já está criado
 
-          this.getTr(user, tr); //o tr é passado pois já está criado
+            this.updateCount(); //método para aumentar o contador
 
-          this.updateCount(); //método para aumentar o contador
-
-          this.formUpdateEl.reset(); //reseta o formulário para esvaziar os campos
-          btn.disabled = false; //habilita o btn
-          this.showPanelCreate(); //esconde o update e mostra o create dos formularios
+            this.formUpdateEl.reset(); //reseta o formulário para esvaziar os campos
+            btn.disabled = false; //habilita o btn
+            this.showPanelCreate(); //esconde o update e mostra o create dos formularios
+          }); //método save
         },
         (e) => {
           console.error(e); //Caso haja erro ele da console log do mesmo
@@ -89,7 +89,8 @@ class UserController {
             values.photo = content; //recebe o valor da foto como parametro e iguala ao parametro content
 
             values.save().then((user) => {
-              this.AddLine(values); //ele puxa os valores do get values no parametro e adiciona o Id
+              //lembrando que o save virou uma promise, por isso o then
+              this.AddLine(user); //ele puxa os valores do get values no parametro e adiciona o Id
 
               btn.disabled = false; //desabilita os campos
               this.formEl.reset(); //Deixa os campos vazios
