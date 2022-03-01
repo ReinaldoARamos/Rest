@@ -1,7 +1,7 @@
 class User {
   constructor(name, gender, birth, country, email, password, photo, admin) {
     this.id;
-     this._name = name;
+    this._name = name;
     this._gender = gender;
     this._birth = birth;
     this._country = country;
@@ -9,7 +9,7 @@ class User {
     this._password = password;
     this._photo = photo;
     this._admin = admin;
-    
+
     this._register = new Date();
   }
 
@@ -75,7 +75,7 @@ class User {
     }
   }
 
- static getUserStorage() {
+  static getUserStorage() {
     let users = [];
 
     if (localStorage.getItem("users")) {
@@ -89,47 +89,54 @@ class User {
     if (!userID) userID = 0; // a partir do igual nós podemos chamar o id sem window, pois ele já está referenciado
 
     userID++;
-    localStorage.setItem("userID", userID)
+    localStorage.setItem("userID", userID);
     return userID;
   }
 
-  toJSON(){
-      
-       let json  = {}
+  toJSON() {
+    let json = {};
 
-      Object.keys(this).forEach(key=>{
-         // aqui to usando o método do obejectt...onde ele busca uma key
-        //essa key é o this, ou seja, o this vai mandar um array, e esse array vai ter keys, onde podemos 
-        //executar um forEach que vai veriricar todas as keys dentro desse array
+    Object.keys(this).forEach((key) => {
+      // aqui to usando o método do obejectt...onde ele busca uma key
+      //essa key é o this, ou seja, o this vai mandar um array, e esse array vai ter keys, onde podemos
+      //executar um forEach que vai veriricar todas as keys dentro desse array
 
-      if(this[key] !== undefined)  json[key] = this[key];
+      if (this[key] !== undefined) json[key] = this[key];
       //dentro desse array ele vai executar um if para verificar se a key é undefined, e caso nao seja
       //ele pela o objeto vazio json criado noe escpopo do método e iguala À key do array
     });
-           return json //enfim ele retorna
+    return json; //enfim ele retorna
   }
   save() {
-    if (this.id) {
-      HttpRequest.put(`/users${this.id}`, this.toJSON());
-      //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
-      //e caso exista id ele simplesmente atualiza
-      //caso contrario cai nesse else que cadastra um novo
+    return new Promise((resolve, reject) => { //criamos uma nova promise
+      let promise; //variavel que vai receber o json do HTTPrequest
+      if (this.id) { //pega o id
+        promise = HttpRequest.put(`/users${this.id}`, this.toJSON()); //faz o request com a url, a id e o objeto JSON
+        //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
+        //e caso exista id ele simplesmente atualiza
+        //caso contrario cai nesse else que cadastra um novo
+      } else {
+        promise = HttpRequest.post(`/users${this.id}`, this.toJSON());
+        //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
+      }
 
-    } else {
-      HttpRequest.post(`/users${this.id}`, this.toJSON());
-      //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
-    }
-  }
-  deleteUser(){
+      promise.then((data) => {
+        this.loadFromJSON(data); //pega a promise e usa o método loadFromJson para colocar o JSon dentro de um array
+          resolve(this)
+      }).catch(e=>{
+        reject(e);
+      });
 
-   let  users = User.getUserStorage();
-  users.forEach((UserData, index) => {
-    if (this._id == UserData._id) {
-      users.splice(index, 1);
-      
-    }
+    });
     
-  });
-  localStorage.setItem("users", JSON.stringify(users));
+  }
+  deleteUser() {
+    let users = User.getUserStorage();
+    users.forEach((UserData, index) => {
+      if (this._id == UserData._id) {
+        users.splice(index, 1);
+      }
+    });
+    localStorage.setItem("users", JSON.stringify(users));
   }
 }
