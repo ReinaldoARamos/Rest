@@ -66,8 +66,20 @@ router.delete('/:id', function(req, res, next) {//ja temos uma rota pra / que ta
   
 });
 
+router.post('/', function(req, res, next) {
+
+  client.post(`/users`, req.body, function(err, request, response, obj) {
+      assert.ifError(err);
+
+      res.json(obj);
+      Location.reload();
+  });
+
+});
+/*
+
 router.post('/', function(req, res, next) {//ja temos uma rota pra / que ta dentro do arquivo users.js
-  client.post(`/users/` ,function(err, request, response, obj) { //criamos aqui a chamada do client na rota users
+  client.post(`/users/` ,req.body,function(err, request, response, obj) { //criamos aqui a chamada do client na rota users
     //que busca as informações dentro da mesma, noc aso os users do rest-api
     assert.ifError(err);
     res.json(obj) 
@@ -77,12 +89,9 @@ router.post('/', function(req, res, next) {//ja temos uma rota pra / que ta dent
     //------
     //toda vez que chamaram / vao chamar também a barra users
   });
-
-
-  
 });
 
-
+*/
 
 
 
