@@ -71,6 +71,7 @@ router.post('/', function(req, res, next) {//ja temos uma rota pra / que ta dent
     //que busca as informações dentro da mesma, noc aso os users do rest-api
     assert.ifError(err);
     res.json(obj) 
+    console.log(err)
     //passamos assim pra pra ao invés de usar o JSON Stringfy ele ja interptera
     //o JSOn, no caso o obj
     //------

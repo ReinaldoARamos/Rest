@@ -107,16 +107,51 @@ class User {
     });
     return json; //enfim ele retorna
   }
+  //-------------------
+
+  save(){
+
+    return new Promise((resolve, reject) => {
+
+        let promise;
+
+        if (this.id) {
+
+            promise = HttpRequest.put(`/users/${this.id}`, this.toJSON());
+
+        } else {
+
+            promise = HttpRequest.post(`/users`, this.toJSON());
+
+        }
+
+        promise.then(data => {
+
+            this.loadFromJSON(data);
+
+            resolve(this);
+
+        }).catch(e => {
+
+            reject(e);
+
+        });
+
+    });
+
+}
+
+ /*
   save() {
     return new Promise((resolve, reject) => { //criamos uma nova promise
       let promise; //variavel que vai receber o json do HTTPrequest
       if (this.id) { //pega o id
-        promise = HttpRequest.put(`/users${this.id}`, this.toJSON()); //faz o request com a url, a id e o objeto JSON
+        promise = HttpRequest.put(`/users/${this.id}`, this.toJSON()); //faz o request com a url, a id e o objeto JSON
         //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
         //e caso exista id ele simplesmente atualiza
         //caso contrario cai nesse else que cadastra um novo
       } else {
-        promise = HttpRequest.post(`/users${this.id}`, this.toJSON());
+        promise = HttpRequest.post(`/users`, this.toJSON());
         //colocando o httprequest put para criar editar um usuário , passando o parametro da rota e o id
       }
 
@@ -130,6 +165,9 @@ class User {
     });
     
   }
+
+  */
+  //-----------
   deleteUser() {
     let users = User.getUserStorage();
     users.forEach((UserData, index) => {
