@@ -88,11 +88,12 @@ class UserController {
           (content) => {
             values.photo = content; //recebe o valor da foto como parametro e iguala ao parametro content
 
-            values.save(); //adiciona ids, localiza e substitui no array
-            this.AddLine(values); //ele puxa os valores do get values no parametro e adiciona o Id
+            values.save().then((user) => {
+              this.AddLine(values); //ele puxa os valores do get values no parametro e adiciona o Id
 
-            btn.disabled = false; //desabilita os campos
-            this.formEl.reset(); //Deixa os campos vazios
+              btn.disabled = false; //desabilita os campos
+              this.formEl.reset(); //Deixa os campos vazios
+            }); //adiciona ids, localiza e substitui no array
           },
           (e) => {
             console.error(e);
@@ -195,9 +196,9 @@ class UserController {
     //essa função foi criada para passar por todos os fields e pegar os valores
   }
 
-  
   selectAll() {
-    HttpRequest.get('/users').then(data=> { //criando a classe httprequest
+    HttpRequest.get("/users").then((data) => {
+      //criando a classe httprequest
       //nela usamos o then, ou seja, aqui a classe usa o método get, pega os valores do
       //users, cria o array e adiciona dentro da aplicação
 
@@ -206,8 +207,7 @@ class UserController {
         //aray esse que é feito o for each para adicionar os usuários na tela
         let user = new User();
         user.loadFromJSON(dataUser);
-        
-        
+
         this.AddLine(user);
         //O SelectALl pega a coleção do user storage e instancia, em seguida, essa instancia
         //recebe os valores do loadfromJSon(que se iguala a cada atributo do objeto json)
@@ -215,7 +215,6 @@ class UserController {
         //pelo parâmetro até a template string
       });
     });
-
   }
 
   AddLine(dataUser) {
