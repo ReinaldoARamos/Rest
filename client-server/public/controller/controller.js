@@ -218,7 +218,9 @@ class UserController {
   }
 
   selectAll() {
-    HttpRequest.get("/users").then((data) => {
+
+   
+       User.getUserStorage().then((data) => {
       //criando a classe httprequest
       //nela usamos o then, ou seja, aqui a classe usa o método get, pega os valores do
       //users, cria o array e adiciona dentro da aplicação

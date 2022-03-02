@@ -79,15 +79,6 @@ class User {
    return  HttpRequest.get("/users");
   }
 
-  getNewId() {
-    let userID = parseInt(localStorage.getItem("userID"));
-    if (!userID) userID = 0; // a partir do igual nós podemos chamar o id sem window, pois ele já está referenciado
-
-    userID++;
-    localStorage.setItem("userID", userID);
-    return userID;
-  }
-
   toJSON() {
     let json = {};
 
