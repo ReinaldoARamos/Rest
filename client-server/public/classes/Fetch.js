@@ -25,12 +25,20 @@ static delete(url, params= {}) {
         //colocamos um método estático porque desse jeito podemos chamar o método 
         //fora da classe de forma direta, sme precisar criar uma intância da classe
         return new Promise((resolve, reject)=>{
+          let request;
+          switch(methos.toLowerCase()) {
+              case 'get':
+            request = url //caso o método seja get o request é igual  a url recebida
+              break;
+              default:
+              //caso nao seja ele executa o request assim:  
+              request = new Request(url, {
+                method, //recebe o método get
+                body: JSON.stringify(param), //recebe o body com o json, passando para string
+                headers: new Headers({'Content-Type' : 'application/json'}) //cria os heades
+              })
+          }
           
-          let request = new Request(url, {
-            method, //recebe o método get
-            body: JSON.stringify(param), //recebe o body com o json, passando para string
-            headers: new Headers({'Content-Type' : 'application/json'}) //cria os heades
-          })
        
           fetch(request).then(response=>{ //o fetch nao recebeu nenhum método, entao vamos criar o let request
             //o fetch retorna uma promessa e passamos a url como parametro pra ele pegar os dados
