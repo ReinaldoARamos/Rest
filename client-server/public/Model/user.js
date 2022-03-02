@@ -76,7 +76,7 @@ class User {
   }
 
   static getUserStorage() {
-   return  HttpRequest.get("/users");
+   return  Fetch.get("/users");
   }
 
   toJSON() {
