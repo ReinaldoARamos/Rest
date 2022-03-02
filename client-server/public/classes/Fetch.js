@@ -1,5 +1,6 @@
 const { json } = require("express");
 const { response } = require("../../app");
+const { param } = require("../../routes");
 
 class Fetch {
 
@@ -24,9 +25,14 @@ static delete(url, params= {}) {
         //colocamos um método estático porque desse jeito podemos chamar o método 
         //fora da classe de forma direta, sme precisar criar uma intância da classe
         return new Promise((resolve, reject)=>{
+          
+          let request = new Request(url, {
+            method, //recebe o método get
+            body: JSON.stringify(param), //recebe o body com o json, passando para string
+            headers: new Headers({'Content-Type' : 'application/json'}) //cria os heades
+          })
        
-       
-          fetch(url).then(response=>{ 
+          fetch(request).then(response=>{ //o fetch nao recebeu nenhum método, entao vamos criar o let request
             //o fetch retorna uma promessa e passamos a url como parametro pra ele pegar os dados
             //o response vao ser os dados que ele vai dar get dentro de users na porta 4000
             //retprnando esses dados dentro do responde.json()
