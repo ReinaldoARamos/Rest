@@ -48,9 +48,10 @@ static delete(url, params= {}) {
     
           resolve(obj);
         };
-        ajax.setRequestHeader('Content-Type', 'application/json');
+        
+        ajax.setRequestHeader('Content-Type', 'application/json')
+    
         ajax.send(JSON.stringify(params));
-
         });
             
         

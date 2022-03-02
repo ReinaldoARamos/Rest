@@ -36,8 +36,11 @@ router.get('/:id', function(req, res, next) {//ja temos uma rota pra / que ta de
 
   
 });
+
+
+
 router.put('/:id', function(req, res, next) {//ja temos uma rota pra / que ta dentro do arquivo users.js
-  client.put(`/users/ ${req.params.id}`, req.body/*Vamos pegar as informações dentro do req, no caso o json**/ ,function(err, request, response, obj) { //criamos aqui a chamada do client na rota users
+  client.put(`/users/${req.params.id}`, req.body/*Vamos pegar as informações dentro do req, no caso o json**/ ,function(err, request, response, obj) { //criamos aqui a chamada do client na rota users
     //que busca as informações dentro da mesma, noc aso os users do rest-api
     assert.ifError(err);
     res.json(obj) 
@@ -50,6 +53,7 @@ router.put('/:id', function(req, res, next) {//ja temos uma rota pra / que ta de
 
   
 });
+
 router.delete('/:id', function(req, res, next) {//ja temos uma rota pra / que ta dentro do arquivo users.js
   client.del(`/users/${req.params.id}` ,function(err, request, response, obj) { //criamos aqui a chamada do client na rota users
     //que busca as informações dentro da mesma, noc aso os users do rest-api
