@@ -76,12 +76,7 @@ class User {
   }
 
   static getUserStorage() {
-    let users = [];
-
-    if (localStorage.getItem("users")) {
-      users = JSON.parse(localStorage.getItem("users"));
-    }
-    return users;
+   return  HttpRequest.get("/users");
   }
 
   getNewId() {
